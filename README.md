@@ -5,7 +5,7 @@ This project is a sample for a clean architecture model in my perspective
 #### Please, if you are read this repository, give me feedback about my code. This help me to improve. Thank you
 
 E-mail: felipe-not@hotmail.com
-Or add an issue into this repo, thanks.
+Or open an issue into this repo, thanks.
 
 ### Requirements
 
