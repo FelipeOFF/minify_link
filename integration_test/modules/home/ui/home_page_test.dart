@@ -76,7 +76,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        const url = "https://nubank.com.br";
+        const url = "https://google.com.br";
 
         final textField = find.byType(TextFormField);
         final button = find.byType(ElevatedButtonLoadingIcon);
@@ -111,7 +111,7 @@ void main() {
 
         await tester.pumpAndSettle();
 
-        const url = "https://nubank.com.br";
+        const url = "https://google.com.br";
 
         final textField = find.byType(TextFormField);
         final button = find.byType(ElevatedButtonLoadingIcon);

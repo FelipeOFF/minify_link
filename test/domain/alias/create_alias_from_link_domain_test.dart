@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:minify_link/domain/error/generic_error.dart';
 import 'package:minify_link/domain/error/generic_error_ext.dart';
 import 'package:minify_link/domain/usecase/alias/create_alias_from_link_usecase.dart';
@@ -10,6 +8,8 @@ import 'package:minify_link/model/alias/res/link_model.dart';
 import 'package:minify_link/repository/alias/i_alias_repository.dart';
 import 'package:minify_link/service/endpoint.dart';
 import 'package:minify_link/util/either_helpers.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 @GenerateMocks([IAliasRepository])
 import "create_alias_from_link_domain_test.mocks.dart";
@@ -19,11 +19,11 @@ void main() {
     final aliasRepository = MockIAliasRepository();
 
     test("on execute the use case and return short link", () async {
-      const link = "https://nubank.com.br";
+      const link = "https://google.com.br";
       final linkModel = LinkModel.fromJson({
         "alias": "43290",
         "_links": {
-          "self": "https://nubank.com.br/",
+          "self": "https://google.com.br/",
           "short": "https://url-shortener-nu.herokuapp.com/short/43290"
         }
       });
@@ -42,7 +42,7 @@ void main() {
     });
 
     test("on execute the use case and return a error", () async {
-      const link = "https://nubank.com.br";
+      const link = "https://google.com.br";
       const statusCode = 401;
       final requestOption = RequestOptions(path: Endpoint.apiAlias);
       final dataError = {"error": "Alias for 43291 not found"};

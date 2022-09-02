@@ -1,21 +1,21 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:minify_link/model/alias/req/Link_model_req.dart';
 import 'package:minify_link/model/alias/res/link_model.dart';
 import 'package:minify_link/model/alias/res/reverse_link.dart';
 import 'package:minify_link/repository/alias/alias_repository_impl.dart';
 import 'package:minify_link/repository/alias/i_alias_repository.dart';
 import 'package:minify_link/service/endpoint.dart';
-import 'package:minify_link/service/nubank_api_client.dart';
+import 'package:minify_link/service/minify_api_client.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
-@GenerateMocks([NubankApiClient])
+@GenerateMocks([MinifyApiClient])
 import 'alias_repository_test.mocks.dart';
 
 void main() {
   group("AliasRepository", () {
-    final mockNubankClient = MockNubankApiClient();
+    final mockMinifyClient = MockMinifyApiClient();
 
     test(
       "On execute get shorted link and return success the shorted link",
@@ -23,15 +23,15 @@ void main() {
         final mockResultFromEndpoint = LinkModel.fromJson({
           "alias": "43290",
           "_links": {
-            "self": "https://nubank.com.br/",
+            "self": "https://google.com.br/",
             "short": "https://url-shortener-nu.herokuapp.com/short/43290"
           }
         });
 
-        const link = "https://nubank.com.br/";
+        const link = "https://google.com.br/";
 
         when(
-          mockNubankClient.post(
+          mockMinifyClient.post(
             Endpoint.apiAlias,
             data: LinkModelReq(url: link).toJson(),
           ),
@@ -45,7 +45,7 @@ void main() {
         );
 
         final IAliasRepository aliasRepository =
-            AliasRepositoryImpl(mockNubankClient);
+            AliasRepositoryImpl(mockMinifyClient);
 
         final result = await aliasRepository.getShortedLink(link);
 
@@ -57,12 +57,12 @@ void main() {
     test(
       "On execute get shorted link and return error from server",
       () async {
-        const link = "https://nubank.com.br/";
+        const link = "https://google.com.br/";
         const statusCode = 401;
         final requestOption = RequestOptions(path: Endpoint.apiAlias);
 
         when(
-          mockNubankClient.post(
+          mockMinifyClient.post(
             Endpoint.apiAlias,
             data: LinkModelReq(url: link).toJson(),
           ),
@@ -77,7 +77,7 @@ void main() {
         );
 
         final IAliasRepository aliasRepository =
-            AliasRepositoryImpl(mockNubankClient);
+            AliasRepositoryImpl(mockMinifyClient);
 
         try {
           await aliasRepository.getShortedLink(link);
@@ -92,13 +92,13 @@ void main() {
       () async {
         const alias = "43290";
         final mockResultFromEndpoint = ReverseLink.fromJson({
-          "url": "https://nubank.com.br/",
+          "url": "https://google.com.br/",
         });
 
         const endpoint = "${Endpoint.apiAlias}/$alias";
 
         when(
-          mockNubankClient.get(
+          mockMinifyClient.get(
             endpoint,
           ),
         ).thenAnswer(
@@ -113,7 +113,7 @@ void main() {
         );
 
         final IAliasRepository aliasRepository =
-            AliasRepositoryImpl(mockNubankClient);
+            AliasRepositoryImpl(mockMinifyClient);
 
         final result = await aliasRepository.getReverseLinkByAlias(alias);
 
@@ -131,7 +131,7 @@ void main() {
         const endpoint = "${Endpoint.apiAlias}/$alias";
 
         when(
-          mockNubankClient.get(
+          mockMinifyClient.get(
             endpoint,
           ),
         ).thenThrow(
@@ -145,7 +145,7 @@ void main() {
         );
 
         final IAliasRepository aliasRepository =
-            AliasRepositoryImpl(mockNubankClient);
+            AliasRepositoryImpl(mockMinifyClient);
 
         try {
           await aliasRepository.getReverseLinkByAlias(alias);

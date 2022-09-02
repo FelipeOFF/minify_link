@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'mock/client/nubank_mock_client.dart';
+import 'mock/client/minify_mock_client.dart';
 import 'mock/server/body_response.dart';
 import 'mock/server/endpoint/get_api_alias_id_200.dart';
 import 'mock/server/endpoint/get_api_alias_id_404.dart';
@@ -30,10 +30,10 @@ void main() {
     test(
       "execute endpoint POST /api/alias with a link and return the short link",
       () async {
-        final NubankMockClient client = NubankMockClient();
+        final MinifyMockClient client = MinifyMockClient();
 
         const Map<String, dynamic> dataRequest = {
-          "url": "https://nubank.com.br/"
+          "url": "https://google.com.br/"
         };
         final dataResponse = await client.post("/api/alias", data: dataRequest);
         final dataJson = dataResponse.data;
@@ -46,7 +46,7 @@ void main() {
     test(
       "execute endpoint GET /api/alias/id with correct id and return the normal link",
       () async {
-        final NubankMockClient client = NubankMockClient();
+        final MinifyMockClient client = MinifyMockClient();
 
         final dataResponse = await client.get("/api/alias/43290");
         final dataJson = json.decode(dataResponse.data as String);
@@ -59,7 +59,7 @@ void main() {
     test(
       "execute endpoint GET /api/alias/id with wrong id and return the normal link",
       () async {
-        final NubankMockClient client = NubankMockClient();
+        final MinifyMockClient client = MinifyMockClient();
         try {
           final dataResponse = await client.get("/api/alias/43291");
           expect(dataResponse, null);

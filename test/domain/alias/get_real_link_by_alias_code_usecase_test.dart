@@ -1,8 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:minify_link/domain/error/generic_error.dart';
 import 'package:minify_link/domain/error/generic_error_ext.dart';
 import 'package:minify_link/domain/usecase/alias/get_real_link_by_alias_code_usecase.dart';
@@ -10,6 +8,8 @@ import 'package:minify_link/model/alias/res/reverse_link.dart';
 import 'package:minify_link/repository/alias/i_alias_repository.dart';
 import 'package:minify_link/service/endpoint.dart';
 import 'package:minify_link/util/either_helpers.dart';
+import 'package:mockito/annotations.dart';
+import 'package:mockito/mockito.dart';
 
 @GenerateMocks([IAliasRepository])
 import "get_real_link_by_alias_code_usecase_test.mocks.dart";
@@ -23,7 +23,7 @@ void main() {
       () async {
         const alias = "43290";
         final reverseLink = ReverseLink.fromJson({
-          "url": "https://nubank.com.br/",
+          "url": "https://google.com.br/",
         });
 
         when(aliasRepository.getReverseLinkByAlias(alias))

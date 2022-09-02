@@ -6,13 +6,13 @@ import 'package:minify_link/repository/alias/i_alias_repository.dart';
 import 'package:minify_link/service/endpoint.dart';
 
 class AliasRepositoryImpl extends IAliasRepository {
-  final AbstractGateway _nubankApiClient;
+  final AbstractGateway _minifyApiClient;
 
-  AliasRepositoryImpl(this._nubankApiClient);
+  AliasRepositoryImpl(this._minifyApiClient);
 
   @override
   Future<LinkModel> getShortedLink(String link) async {
-    final req = await _nubankApiClient.post(
+    final req = await _minifyApiClient.post(
       Endpoint.apiAlias,
       data: LinkModelReq(url: link).toJson(),
     );
@@ -21,7 +21,7 @@ class AliasRepositoryImpl extends IAliasRepository {
 
   @override
   Future<ReverseLink> getReverseLinkByAlias(String alias) async {
-    final req = await _nubankApiClient.get(
+    final req = await _minifyApiClient.get(
       "${Endpoint.apiAlias}/$alias",
     );
     return ReverseLink.fromJson(req.data);
