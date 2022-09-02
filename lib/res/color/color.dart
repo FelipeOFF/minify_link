@@ -1,5 +1,5 @@
 import 'dart:ui';
 
-const primaryColor = Color(0xff379392);
-const cursorColor = Color(0xff4FB0C6);
-const elementBackgroundColor = Color(0xFF4F86C6);
+const primaryColor = Color(0xff9F9AA4);
+const cursorColor = Color(0xffB5C9C3);
+const elementBackgroundColor = Color(0xFFCFD8D7);
